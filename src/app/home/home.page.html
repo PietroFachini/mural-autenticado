@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mural</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="sair()">Sair</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <p class="saudacao" *ngIf="auth.usuario">
+    Conectado como <strong>{{ auth.usuario.email }}</strong>
+  </p>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Novo recado</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none">
+        <ion-label position="stacked">Texto</ion-label>
+        <ion-input
+          [(ngModel)]="textoNovo"
+          placeholder="Ex: Prova de PDM na sexta">
+        </ion-input>
+      </ion-item>
+
+      <p class="msg-erro" *ngIf="mensagemErro">
+        {{ mensagemErro }}
+      </p>
+
+      <ion-button expand="block" (click)="publicar()">
+        Publicar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <p class="vazio" *ngIf="recados.length === 0">
+    Nenhum recado ainda. Seja o primeiro a publicar.
+  </p>
+
+  <ion-card *ngFor="let recado of recados">
+    <ion-card-header>
+      <ion-card-title>{{ recado.texto }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ recado.autor }}</p>
+      <p class="data">{{ recado.criadoEm | date:'dd/MM/yyyy HH:mm' }}</p>
+      <ion-button fill="outline" color="danger" size="small" (click)="excluir(recado.id)">
+        Excluir
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
